@@ -282,7 +282,6 @@
         "o20":"WHAT",
         "o21":"WHAT THE",
         "o22":"WHAT THE F-",
-		"victory":"VICTORY",
 		
 		// cutscene
 		"cutscene_moogus0": "*splatter*",
@@ -678,6 +677,10 @@
 		"weirdroute4": "Time to do what I do best.",
 		"weirdroute5": "Red. I always knew somethin' was fishy about that guy, but I didn't stop him in time... He's rottin' in that lava pit now.",
 		"weirdroute6": "The Captain...",
-		"weirdroute7": "ENTER CODE"
+		"weirdroute7": "ENTER CODE",
+
+		// credits
+		"victory":"VICTORY",
+		"credits_thanks":"Thank you for playing!"
 	}
 }
