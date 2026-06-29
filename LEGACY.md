@@ -61,6 +61,7 @@ Current version: **1.1.1b**
 - White's halo effect was fixed.
 - Fixed some variables not working correctly in Hscript.
 - Pets are correctly scaled in Pip Towers stage.
+- Playable Green's scared animation is fixed.
 
 ### Changes
 - HUD no longer cuts off in Ejected, Turbulence and Danger.
