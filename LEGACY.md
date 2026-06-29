@@ -63,7 +63,7 @@ Current version: **1.1.1b**
 - Pets are correctly scaled in Pip Towers stage.
 
 ### Changes
-- HUD no longer cuts off in Ejected and Turbulence.
+- HUD no longer cuts off in Ejected, Turbulence and Danger.
 - The "VICTORY" text in Victory is now translatable and in higher quality.
 - Copy Pet in Identity Crisis is now in grayscale instead of an off colored filter.
 - Parasite Maroon's healthbar color changed for effect.
