@@ -8,34 +8,26 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest 
+    # Hxvlcのビルド dependenciesの関係上、MacアプリはMac環境でビルドする必要があります
+    runs-on: macos-13 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      # READMEの指示：Haxe 4.3.6 以降が必要
       - name: Setup Haxe
-        uses: vshaxe/setup-haxe@v1
+        uses: haxe-action/setup-haxe@v1
         with:
-          haxe-version: 4.2.5
+          haxe-version: 4.3.6
 
-      - name: Cache Haxelib
-        uses: actions/cache@v4
-        with:
-          path: .haxelib
-          key: ${{ runner.os }}-haxelib-${{ hashFiles('Project.xml') }}
-
-      - name: Install Dependencies
+      # READMEの指示：hxpkgを使って期待されるバージョンを強制インストール
+      - name: Install Dependencies via hxpkg
         run: |
-          haxelib setup .haxelib
-          haxelib install lime
-          haxelib install openfl
-          haxelib install flixel
-          haxelib install hxcpp
-          haxelib set lime
-          haxelib set openfl
-          haxelib set flixel
-          haxelib set hxcpp
+          haxelib install hxpkg
+          haxelib run hxpkg setup
+          haxelib run hxpkg install
 
+      # READMEの指示：lime test cpp (または build mac) でビルド
       - name: Build Game for Mac
         run: |
           haxelib run lime build mac -release
