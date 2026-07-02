@@ -8,61 +8,11 @@ on:
 
 jobs:
   build:
-    # エラーが出にくい安定した Linux 環境で動かします
     runs-on: ubuntu-latest 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # 古い krdlab ではなく、公式の vshaxe に変更
-      - name: Setup Haxe
-        uses: vshaxe/setup-haxe@v1
-        with:
-          haxe-version: 4.2.5
-
-      - name: Cache Haxelib
-        uses: actions/cache@v4
-        with:
-          path: .haxelib
-          key: ${{ runner.os }}-haxelib-${{ hashFiles('Project.xml') }}
-
-      - name: Install Dependencies
-        run: |
-          haxelib setup .haxelib
-          haxelib install lime
-          haxelib install openfl
-          haxelib install flixel
-          haxelib install hxcpp
-          haxelib set lime
-          haxelib set openfl
-          haxelib set flixel
-          haxelib set hxcpp
-
-      - name: Build Game for Mac
-        run: |
-          haxelib run lime build mac -release
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ImpostorLegacy-Mac
-          path: export/release/macos/bin/name: Build Mac
-on:
-  push:
-    branches: [ "main", "master" ]
-  pull_request:
-    branches: [ "main", "master" ]
-  workflow_dispatch:
-
-jobs:
-  build:
-    # エラーが出にくい安定した Linux 環境で動かします
-    runs-on: ubuntu-latest 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      # 古い krdlab ではなく、公式の vshaxe に変更
       - name: Setup Haxe
         uses: vshaxe/setup-haxe@v1
         with:
