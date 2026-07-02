@@ -1,14 +1,15 @@
 name: Build Mac
 on:
   push:
-    branches: [ "main", "master" ] # お使いのメインブランチ名に合わせてください
+    branches: [ "main", "master" ]
   pull_request:
     branches: [ "main", "master" ]
-  workflow_dispatch: # GitHub上で手動実行ボタンを出す設定
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: macos-14 # Apple Silicon (M1/M2) ベースのMac環境
+    # macos-13 を指定することで、Intelアーキテクチャ(x86_64)のMac環境で実行させます
+    runs-on: macos-13 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -16,7 +17,7 @@ jobs:
       - name: Setup Haxe
         uses: krdlab/setup-haxe@v1
         with:
-          haxe-version: 4.2.5 # FNF系Modが最も安定するバージョン
+          haxe-version: 4.2.5
 
       - name: Cache Haxelib
         uses: actions/cache@v4
@@ -28,28 +29,18 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          # 1. ローカルのライブラリ環境を初期化
           haxelib setup .haxelib
-          
-          # 2. 手元のMacでバグの原因になっていたGit版を避け、公式リリース版を強制指定してインストール
           haxelib install lime
           haxelib install openfl
           haxelib install flixel
           haxelib install hxcpp
-          
-          # 3. 参照先を通常版（数字のバージョン）に固定
           haxelib set lime
           haxelib set openfl
           haxelib set flixel
           haxelib set hxcpp
-          
-          # FNFやImpostor Modに必要な追加ライブラリがあればここに追記してください
-          # 例: haxelib install flixel-addons
-          # 例: haxelib install flixel-ui
 
       - name: Build Game for Mac
         run: |
-          # ここでゲームをビルドします
           haxelib run lime build mac -release
 
       - name: Upload Artifact
