@@ -8,14 +8,15 @@ on:
 
 jobs:
   build:
-    # macos-13 を指定することで、Intelアーキテクチャ(x86_64)のMac環境で実行させます
+    # 安定しているmacos-13（Intel環境）をベースにします
     runs-on: macos-13 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      # エラー原因だった古いkrdlab製をやめ、公式推奨のvshaxe製に切り替え
       - name: Setup Haxe
-        uses: krdlab/setup-haxe@v1
+        uses: vshaxe/setup-haxe@v1
         with:
           haxe-version: 4.2.5
 
