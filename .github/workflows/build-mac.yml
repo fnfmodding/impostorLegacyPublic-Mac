@@ -8,26 +8,34 @@ on:
 
 jobs:
   build:
-    # Hxvlcのビルド dependenciesの関係上、MacアプリはMac環境でビルドする必要があります
-    runs-on: macos-13 
+    runs-on: macos-13
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
 
-      # READMEの指示：Haxe 4.3.6 以降が必要
       - name: Setup Haxe
         uses: haxe-action/setup-haxe@v1
         with:
           haxe-version: 4.3.6
 
-      # READMEの指示：hxpkgを使って期待されるバージョンを強制インストール
-      - name: Install Dependencies via hxpkg
+      - name: Install Dependencies & Update Lime Submodules
         run: |
+          # 1. hxpkgのインストールと実行
           haxelib install hxpkg
           haxelib run hxpkg setup
           haxelib run hxpkg install
+          
+          # 2. 【重要】見つけてくれたスクリプトの肝：limeのGitサブモジュールを強制同期
+          cd .haxelib/lime/git/
+          git submodule sync --recursive
+          git submodule update --init --recursive --force
+          cd ../../../
+          
+          # 3. limeのC++部分をリビルド
+          haxelib run lime rebuild cpp -release
 
-      # READMEの指示：lime test cpp (または build mac) でビルド
       - name: Build Game for Mac
         run: |
           haxelib run lime build mac -release
