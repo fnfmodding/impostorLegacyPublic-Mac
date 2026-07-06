@@ -26,7 +26,10 @@ jobs:
         run: haxelib run hxpkg install
 
       - name: Install missing haxelibs
-        run: haxelib install format
+        run: |
+          haxelib install format || true
+          haxelib install hxp || true
+          haxelib install hxcpp || true
 
       - name: Debug haxelib path
         run: |
