@@ -25,6 +25,9 @@ jobs:
       - name: Restore dependencies via HxPKG
         run: haxelib run hxpkg install
 
+      - name: Install missing haxelibs
+        run: haxelib install format
+
       - name: Debug haxelib path
         run: |
           find . -maxdepth 4 -type d -name "lime" || true
