@@ -25,11 +25,12 @@ jobs:
       - name: Restore dependencies via HxPKG
         run: haxelib run hxpkg install
 
-      - name: Install missing haxelibs
+      - name: Install lime tool dependencies
         run: |
           haxelib install format || true
+          haxelib install svg || true
           haxelib install hxp || true
-          haxelib install hxcpp || true
+          haxelib install actuate || true
 
       - name: Debug haxelib path
         run: |
