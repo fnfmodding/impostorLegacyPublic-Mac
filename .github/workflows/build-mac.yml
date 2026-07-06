@@ -19,16 +19,14 @@ jobs:
         with:
           haxe-version: 4.3.7
 
-      - name: Install hmm (Haxe Manager)
-        run: haxelib install hmm
+      - name: Install HxPKG
+        run: haxelib --global install hxpkg
 
-      - name: Restore haxelib dependencies via hmm
-        run: haxelib run hmm install
+      - name: Restore dependencies via HxPKG
+        run: haxelib run hxpkg install
 
-      - name: Setup lime/openfl targets
-        run: |
-          haxelib run lime setup -y flixel
-          haxelib run lime setup -y flixel-ui || true
+      - name: Setup lime
+        run: haxelib run lime setup -y
 
       - name: Build for macOS
         run: haxelib run lime build mac -final
