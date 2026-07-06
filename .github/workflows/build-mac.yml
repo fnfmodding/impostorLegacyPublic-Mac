@@ -32,14 +32,13 @@ jobs:
           haxelib install hxp || true
           haxelib install actuate || true
 
-      - name: Debug haxelib path (念のため確認用)
-        run: |
-          find . -maxdepth 4 -type d -name "lime" || true
-
       - name: Init lime submodules
         run: |
           cd .haxelib/lime/git
           git submodule update --init --recursive
+
+      - name: Rebuild lime native binary (mac)
+        run: haxelib run lime rebuild mac
 
       - name: Rebuild lime tools
         run: haxelib run lime rebuild tools
@@ -49,9 +48,6 @@ jobs:
 
       - name: Setup lime
         run: haxelib run lime setup -y
-
-      - name: Rebuild lime native libs for macOS
-        run: haxelib run lime rebuild mac
 
       - name: Build for macOS
         run: haxelib run lime build mac -final
