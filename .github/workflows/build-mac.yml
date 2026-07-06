@@ -25,11 +25,28 @@ jobs:
       - name: Restore dependencies via HxPKG
         run: haxelib run hxpkg install
 
+      - name: Debug haxelib path
+        run: |
+          find . -maxdepth 4 -type d -name "lime" || true
+
+      - name: Init lime submodules
+        run: |
+          cd .haxelib/lime/git
+          git submodule update --init --recursive
+
+      - name: Rebuild lime tools
+        run: haxelib run lime rebuild tools
+
       - name: Setup lime
         run: haxelib run lime setup -y
 
+      - name: Rebuild lime native libs for macOS
+        run: haxelib run lime rebuild mac
+
       - name: Build for macOS
         run: haxelib run lime build mac -final
+        # DLC付きでビルドしたい場合:
+        # run: haxelib run lime build mac -final -D DLC
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
