@@ -1,3 +1,9 @@
+# THIS IS PORT FOR MacOS
+There are still many bugs; it's not playable properly
+I need help
+
+
+
 # VS IMPOSTOR LEGACY 1.1.1b
 
 ![](assets/legacy/images/branding/UpdogBlack.png)
