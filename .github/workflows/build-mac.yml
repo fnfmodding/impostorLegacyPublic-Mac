@@ -43,9 +43,6 @@ jobs:
       - name: Rebuild lime tools
         run: haxelib run lime rebuild tools
 
-      - name: List built ndlls (debug)
-        run: find .haxelib/lime/git/ndll -type f || echo "ndll folder not found"
-
       - name: Setup lime
         run: haxelib run lime setup -y
 
