@@ -1,44 +1,40 @@
-name: Build Mac
+name: Build macOS
+
 on:
-  push:
-    branches: [ "main", "master" ]
-  pull_request:
-    branches: [ "main", "master" ]
   workflow_dispatch:
+  push:
+    branches: [main]
 
 jobs:
-  build:
+  build-macos:
     runs-on: macos-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          submodules: 'recursive'
+          submodules: recursive
 
-      - name: Setup Haxe
-        uses: haxe-commons/setup-haxe@v1
+      - name: Install Haxe
+        uses: krdlab/setup-haxe@v1
         with:
           haxe-version: 4.3.6
 
-      - name: Install Dependencies & Update Lime Submodules
-        run: |
-          haxelib install hxpkg
-          haxelib run hxpkg setup
-          haxelib run hxpkg install
-          
-          cd .haxelib/lime/git/
-          git submodule sync --recursive
-          git submodule update --init --recursive --force
-          cd ../../../
-          
-          haxelib run lime rebuild cpp -release
+      - name: Install hmm (Haxe Manager)
+        run: haxelib install hmm
 
-      - name: Build Game for Mac
-        run: |
-          haxelib run lime build mac -release
+      - name: Restore haxelib dependencies via hmm
+        run: haxelib run hmm install
 
-      - name: Upload Artifact
+      - name: Setup lime/openfl targets
+        run: |
+          haxelib run lime setup -y flixel
+          haxelib run lime setup -y flixel-ui || true
+
+      - name: Build for macOS
+        run: haxelib run lime build mac -final
+
+      - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ImpostorLegacy-Mac
-          path: export/release/macos/bin/
+          name: vs-impostor-legacy-macos
+          path: export/release/macos/bin/*.app
