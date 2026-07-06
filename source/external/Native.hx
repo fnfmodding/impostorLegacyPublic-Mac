@@ -1,5 +1,4 @@
 package external;
-
 class Native
 {
 	/**
@@ -7,10 +6,10 @@ class Native
 	 * 
 	 * Will fallback on `0.0` if it is not supported.
 	 */
-	public static function getTaskMemory()
+	public static function getTaskMemory():Float
 	{
 		#if cpp
-		return external.memory.Memory.getCurrentUsage();
+		return cast external.memory.Memory.getCurrentUsage();
 		#else
 		return 0.0;
 		#end
