@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-macos:
-    runs-on: macos-13   # Intel(x86_64)ランナーに変更(arm64のndll未対応問題を回避)
+    runs-on: macos-15-intel
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -55,8 +55,6 @@ jobs:
 
       - name: Build for macOS
         run: haxelib run lime build mac -final
-        # DLC付きでビルドしたい場合:
-        # run: haxelib run lime build mac -final -D DLC
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
