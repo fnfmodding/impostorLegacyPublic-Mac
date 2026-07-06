@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-13
+    runs-on: macos-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -22,18 +22,15 @@ jobs:
 
       - name: Install Dependencies & Update Lime Submodules
         run: |
-          # 1. hxpkgのインストールと実行
           haxelib install hxpkg
           haxelib run hxpkg setup
           haxelib run hxpkg install
           
-          # 2. 【重要】見つけてくれたスクリプトの肝：limeのGitサブモジュールを強制同期
           cd .haxelib/lime/git/
           git submodule sync --recursive
           git submodule update --init --recursive --force
           cd ../../../
           
-          # 3. limeのC++部分をリビルド
           haxelib run lime rebuild cpp -release
 
       - name: Build Game for Mac
