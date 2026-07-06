@@ -15,9 +15,9 @@ jobs:
           submodules: recursive
 
       - name: Install Haxe
-        uses: krdlab/setup-haxe@v1
+        uses: krdlab/setup-haxe@v2
         with:
-          haxe-version: 4.3.6
+          haxe-version: 4.3.7
 
       - name: Install hmm (Haxe Manager)
         run: haxelib install hmm
