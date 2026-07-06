@@ -16,7 +16,7 @@ jobs:
           submodules: 'recursive'
 
       - name: Setup Haxe
-        uses: haxe-action/setup-haxe@v1
+        uses: haxe-commons/setup-haxe@v1
         with:
           haxe-version: 4.3.6
 
